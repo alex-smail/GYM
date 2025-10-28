@@ -1,23 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Проект тарифов (Next.js)
 
-## Tariffs test task
+Страница тарифов с таймером скидки.
 
-Implements tariffs page per spec:
+### Функциональность
 
-- Fixed header with 2-minute countdown; last 30s blink in red
-- Fetch tariffs from `https://t-core.fit-hub.pro/Test/GetTariffs`
-- Compute discount % from `price` vs `full_price`
-- Default select `is_best`; desktop badge indicates best offer
-- Buy button blinking; requires checkbox; highlights red if unchecked
-- When timer ends, discount UI fades out and full price remains
+-   Фиксированный баннер вверху с таймером на `COUNTDOWN_SECONDS` секунд (по умолчанию 120).
+-   Последние `WARNING_THRESHOLD_SECONDS` секунд (по умолчанию 30) подсвечиваются красным и мерцают.
+-   Тарифы загружаются с `https://t-core.fit-hub.pro/Test/GetTariffs`.
+-   Скидка рассчитывается по разнице `price` и `full_price`.
+-   По умолчанию выбран тариф с `is_best: true` (если есть).
+-   Кнопка покупки мигает; для покупки требуется отметка чекбокса.
+-   При окончании таймера скидка исчезает: скрывается бейдж скидки и зачёркнутая цена, основной ценой становится `full_price`.
 
-## Getting Started
-
-Install and run:
+### Быстрый старт
 
 ```bash
 npm install
 npm run dev
 ```
 
-Then open [http://localhost:3000](http://localhost:3000).
+Откройте `http://localhost:3000` в браузере.
+
+### Структура и важные файлы
+
+-   `src/components/discount-context/discount-context.tsx` — контекст таймера скидки (`remainingSeconds`, `discountActive`).
+-   `src/components/header-banner/header-banner.tsx` — баннер с отображением таймера.
+-   `src/components/tariffs/components/tariff-card/tariff-card.tsx` — карточка тарифа; показывает скидку только если `discountActive`.
+-   `src/constants/ui.ts` — `COUNTDOWN_SECONDS` и `WARNING_THRESHOLD_SECONDS`.
+
+### Настройки
+
+Измените значения в `src/constants/ui.ts`, чтобы изменить длительность таймера и порог предупреждения.

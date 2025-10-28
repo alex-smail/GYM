@@ -4,8 +4,7 @@ import { useMemo } from 'react';
 import Image from 'next/image';
 import { useTariffs } from '../hooks';
 import { TariffsGrid } from '../components/tariffs/tariffs';
-import { GuaranteeBlock } from '../components/GuaranteeBlock';
-import { AcceptAndBuy, InfoMessage, Span } from '../components';
+import { AcceptAndBuy, GuaranteeBlock, InfoMessage, Span } from '../components';
 import { cn } from '../utils';
 
 export default function TariffsPage() {
