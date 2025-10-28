@@ -1,0 +1,70 @@
+@import 'tailwindcss';
+
+:root {
+	--background: #ffffff;
+	--foreground: #171717;
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-montserrat);
+	--font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background: #0a0a0a;
+		--foreground: #ededed;
+	}
+}
+
+body {
+	background: #262a2b; /* тёмный фон как в макете */
+	color: #f3f4f6;
+	font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
+}
+
+@keyframes blinkFade {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.4;
+	}
+}
+
+.animate-blink {
+	animation: blinkFade 1.2s ease-in-out infinite;
+}
+
+/* Fade-out discount animation when timer ends */
+.discount-fade-exit {
+	transition: opacity 300ms ease, transform 300ms ease;
+	opacity: 1;
+}
+.discount-fade-exited {
+	opacity: 0;
+	transform: translateY(-4px);
+}
+
+/* Цвета под макет */
+.card-surface {
+	background-color: #2f3435;
+}
+.card-surface-strong {
+	background-color: #353a3b;
+}
+.text-muted {
+	color: #a9b0b2;
+}
+.accent-amber {
+	color: #ffcc66;
+}
+.accent-amber-bg {
+	background-color: #ffcc66;
+}
+.accent-emerald {
+	color: #10b981;
+}

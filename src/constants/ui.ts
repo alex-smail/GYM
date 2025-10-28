@@ -1,0 +1,2 @@
+export const COUNTDOWN_SECONDS = 120;
+export const WARNING_THRESHOLD_SECONDS = 30;
