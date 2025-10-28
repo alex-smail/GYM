@@ -8,6 +8,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
+import { COUNTDOWN_SECONDS } from '../../constants';
 
 type DiscountContextValue = {
 	remainingSeconds: number;
@@ -25,7 +26,7 @@ const DiscountContext = createContext<DiscountContextValue | undefined>(
 
 export const DiscountProvider = ({
 	children,
-	initialSeconds = 120,
+	initialSeconds = COUNTDOWN_SECONDS,
 }: DiscountProviderProps) => {
 	const [remainingSeconds, setRemainingSeconds] =
 		useState<number>(initialSeconds);
@@ -41,6 +42,14 @@ export const DiscountProvider = ({
 				window.clearInterval(intervalRef.current);
 		};
 	}, []);
+
+	// Останавливаем таймер при достижении нуля
+	useEffect(() => {
+		if (remainingSeconds <= 0 && intervalRef.current !== null) {
+			window.clearInterval(intervalRef.current);
+			intervalRef.current = null;
+		}
+	}, [remainingSeconds]);
 
 	const value = useMemo<DiscountContextValue>(() => {
 		return {

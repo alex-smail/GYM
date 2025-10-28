@@ -4,11 +4,13 @@ import React from 'react';
 import { useDiscount } from '../discount-context/discount-context';
 import { formatMMSS } from './utils';
 import { Span } from '../span/span';
+import { WARNING_THRESHOLD_SECONDS } from '../../constants';
 
 export const HeaderBanner = () => {
 	const { remainingSeconds } = useDiscount();
 
-	const isWarning = remainingSeconds <= 30 && remainingSeconds > 0;
+	const isWarning =
+		remainingSeconds <= WARNING_THRESHOLD_SECONDS && remainingSeconds > 0;
 	const isExpired = remainingSeconds <= 0;
 
 	return (

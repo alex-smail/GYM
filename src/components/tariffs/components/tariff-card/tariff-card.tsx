@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Tariff } from '../../../../types';
 import { calcDiscountPercent, cn } from '../../../../utils';
+import { useDiscount } from '../../../../components/discount-context/discount-context';
 
 type Props = {
 	tariff: Tariff;
@@ -9,8 +10,9 @@ type Props = {
 };
 
 export const TariffCard = ({ tariff: t, selected, onSelect }: Props) => {
+	const { discountActive } = useDiscount();
 	const discountPercent = calcDiscountPercent(t.price, t.full_price);
-	const showDiscount = discountPercent > 0;
+	const showDiscount = discountActive && discountPercent > 0;
 	const displayedDiscountPercent = t.is_best ? 70 : discountPercent;
 
 	const [text, setText] = useState(t.text);
@@ -91,7 +93,7 @@ export const TariffCard = ({ tariff: t, selected, onSelect }: Props) => {
 					className={cn(
 						'flex h-full',
 						t.is_best
-							? 'flex-row items-center md:justify-between max-w-[546px] mx-auto md:gap-6'
+							? 'flex-row items-center md:justify-between max-w-[546px] mx-auto md:gap-[6px]'
 							: 'flex-col flex items-center md:justify-around md:p-4 max-[376px]:flex-row'
 					)}
 				>
@@ -111,7 +113,7 @@ export const TariffCard = ({ tariff: t, selected, onSelect }: Props) => {
 								'max-[376px]:text-start max-[376px]:text-[17px]',
 								'max-[321px]:text-[16px]',
 								t.is_best
-									? 'md:text-a md:pt-[8px] md:text-center'
+									? 'md:text-a md:pt-[8px] md:text-center md:pl-[28px]'
 									: 'md:text-center md:pt-[32px]'
 							)}
 						>
@@ -125,11 +127,11 @@ export const TariffCard = ({ tariff: t, selected, onSelect }: Props) => {
 								'max-[376px]:w-[123px]',
 								'max-[321px]:items-start',
 								t.is_best
-									? 'items-end'
+									? 'items-start w-[205px] text-start max-[376px]:w-[140px]'
 									: 'md:items-end md:pt-[16px]'
 							)}
 						>
-							{/* Цена со скидкой */}
+							{/* Цена (со скидкой, пока таймер активен; иначе полная) */}
 							<span
 								className={cn(
 									'font-extrabold leading-tight md:pb-[36px]',
@@ -138,7 +140,7 @@ export const TariffCard = ({ tariff: t, selected, onSelect }: Props) => {
 									selected ? 'text-[#FDB056]' : 'text-white'
 								)}
 							>
-								{t.price} ₽
+								{showDiscount ? t.price : t.full_price} ₽
 							</span>
 
 							{/* Цена без скидки */}
@@ -163,7 +165,7 @@ export const TariffCard = ({ tariff: t, selected, onSelect }: Props) => {
 							'max-[321px]:ml-[14px] max-[321px]:leading-[17px] max-[321px]:pb-[8px]',
 							'max-[376px]:ml-[46px] max-[376px]:leading-[20px]',
 							t.is_best
-								? 'max-w-[340px] md:pl-[8px] max-[376px]:w-[89px]'
+								? 'max-w-[340px] md:pl-[8px] max-[376px]:w-[89px] max-[376px]:ml-[30px]'
 								: 'max-w-[360px]'
 						)}
 					>
